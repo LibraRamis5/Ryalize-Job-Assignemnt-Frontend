@@ -53,7 +53,7 @@
         methods: {
             fetchUserData: function()
             {
-                this.$http.get('http://localhost:8080/transactions').then((response) => {
+                this.$http.get('http://localhost:8080/user-transaction').then((response) => {
                     this.transactions = response.body.data.data;
                     this.originaltransactions = this.transactions;
                 }, (response) => {
