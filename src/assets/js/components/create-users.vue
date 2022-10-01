@@ -20,11 +20,11 @@
 
            <div class="form-group">
                 <label name="Phone">Phone</label>
-                <input type="number" class="form-control" v-model="user.phone" id="Phone" required>
+                <input type="number" class="form-control" v-model="user.phone_no" id="Phone" required>
             </div>
             <div class="form-group">
                 <label name="Address">Address</label>
-                <input type="text" class="form-control" v-model="user.addres" id="Address" required>
+                <input type="text" class="form-control" v-model="user.address" id="Address" required>
             </div>
              <div class="form-group">
                 <label name="password">password</label>
