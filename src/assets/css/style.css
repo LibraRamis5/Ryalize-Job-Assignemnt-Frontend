@@ -1,0 +1,41 @@
+body
+{
+    background: #F5F5F5;
+    color: #333;
+}
+
+#page
+{
+    background: #FFF;
+    padding: 3rem;
+}
+
+/* a, button{
+    background: #03a9f4;
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+input{
+    padding: 5px;
+    margin: 5px 0px;
+    font-size: 13px;
+}
+
+.table-hover {
+    border: 1px solid black;
+}
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    background-color: transparent;
+}
+
+td{
+border: 2px solid black !important;
+padding: 15px;
+} */

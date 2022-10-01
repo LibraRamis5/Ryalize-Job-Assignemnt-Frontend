@@ -3,3 +3,8 @@
 
 # JIRA plugin
 atlassian-ide-plugin.xml
+
+
+node_modules
+webpack.config.js
+package-lock.json
