@@ -58,15 +58,19 @@
                         'Content-Type' : 'application/json'
                     }
                 }).then((response) => {
+                    this.notifications.length = 0;
                     this.notifications.push({
                         type: 'success',
                         message: 'User created successfully'
                     });
                 }, (response) => {
+                    this.notifications.length = 0;
+                    for(var t in response.body){
                     this.notifications.push({
-                        type: 'error',
-                        message: 'User not created'
+                        type: 'danger',
+                        message: response.body[t]
                     });
+                    }
                 });
             }
         },
