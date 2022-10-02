@@ -3,6 +3,7 @@
         <h1>All Users</h1>
 
         <p><router-link :to="{ name: 'create_users' }" class="btn btn-primary">Create User</router-link></p>
+        <p><router-link :to="{ name: 'transaction_list' }" class="btn btn-primary">Transaction List</router-link></p>
 
         <div class="form-group">
             <input type="text" name="search" v-model="userSearch" placeholder="Search User" class="form-control" v-on:keyup="searchUsers">

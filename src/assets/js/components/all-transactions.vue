@@ -12,6 +12,15 @@
         />
         <br />
         <input
+          type="date"
+          name="date"
+          v-model="date"
+          placeholder="Search Username"
+          class="form-control my-2"
+        />
+
+        <br />
+        <input
           type="text"
           name="search"
           v-model="location_name"
@@ -69,6 +78,7 @@ export default {
       transactionSearch: "",
       user_name: "",
       location_name: "",
+      date: "",
       links: [],
     };
   },
@@ -113,6 +123,8 @@ export default {
           params: {
             user_name: this.user_name,
             location_name: this.location_name,
+            date: this.date,
+            page: 1,
           },
         })
         .then(
