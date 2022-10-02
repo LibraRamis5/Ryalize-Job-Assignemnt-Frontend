@@ -30,7 +30,6 @@
                      <td>{{ user.address }}</td>
                     <td>
                         <router-link :to="{name: 'edit_user', params: { id: user.id }}" class="btn btn-primary">Edit</router-link>
-                        <router-link :to="{name: 'delete_user', params: { id: user.id }}" class="btn btn-danger">Delete</router-link>
                     </td>
                 </tr>
             </tbody>

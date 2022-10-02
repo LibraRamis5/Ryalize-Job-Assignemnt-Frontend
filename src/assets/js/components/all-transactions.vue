@@ -43,6 +43,7 @@
           <td>Address</td>
           <td>State</td>
           <td>Zip</td>
+          <td>Date</td>
         </tr>
       </thead>
 
@@ -55,6 +56,7 @@
           <td>{{ transaction.address }}</td>
           <td>{{ transaction.state }}</td>
           <td>{{ transaction.zip }}</td>
+          <td>{{ transaction.created_at }}</td>
         </tr>
       </tbody>
     </table>
