@@ -1,5 +1,9 @@
 #Assignment Application
-This application is an example build of creating CRUD pages using VueJS and accessing data via an API.
+This application is devleoped to complete the assignemnt
+
+# Required things
+1- Node
+2- NPM
 
 # Install
     > npm install
