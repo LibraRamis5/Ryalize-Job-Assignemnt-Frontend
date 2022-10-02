@@ -19,7 +19,7 @@
 
            <div class="form-group">
                 <label name="Phone">Phone</label>
-                <input type="text" class="form-control" v-model="user.phone_no" id="Phone" required>
+                <input type="number" class="form-control" v-model="user.phone_no" id="Phone" required>
             </div>
             <div class="form-group">
                 <label name="Address">Address</label>
@@ -68,19 +68,17 @@
                         'Content-Type' : 'application/json'
                     }
                 }).then((response) => {
-                     this.notifications.length = 0;
+                    this.notifications.length = 0;
                     this.notifications.push({
                         type: 'success',
                         message: 'User updated successfully'
                     });
                 }, (response) => {
                      this.notifications.length = 0;
-                    for(var t in response.body){
                     this.notifications.push({
-                        type: 'danger',
-                        message: response.body[t]
+                        type: 'error',
+                        message: 'User not updated'
                     });
-                    }
                 });
             }
         },
