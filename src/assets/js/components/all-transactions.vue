@@ -1,86 +1,139 @@
 <template>
-    <div id="all-users">
-        <h1>All Transactions</h1>
-
+  <div id="all-users">
+    <h1>All Transactions</h1>
+    <form v-on:submit.prevent="filter">
+      <div class="form-group">
+        <input
+          type="text"
+          name="search"
+          v-model="user_name"
+          placeholder="Search Username"
+          class="form-control my-2"
+        />
+        <br />
+        <input
+          type="text"
+          name="search"
+          v-model="location_name"
+          placeholder="Search Location"
+          class="form-control"
+        />
+        <br />
         <div class="form-group">
-            <input type="text" name="search" v-model="transactionSearch" placeholder="Search Transaction" class="form-control" v-on:keyup="searchTransactions">
+          <button class="btn btn-primary">Submit</button>
         </div>
+      </div>
+    </form>
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <td>ID</td>
+          <td>Medium</td>
+          <td>Amount</td>
+          <td>City</td>
+          <td>Address</td>
+          <td>State</td>
+          <td>Zip</td>
+        </tr>
+      </thead>
 
-        <table class="table table-bordered table-striped">
-            <thead>
-            <tr>
-                <td>ID</td>
-                <td>Medium</td>
-                <td>Amount</td>
-                <td>City</td>
-                <td>Address</td>
-                <td>State</td>
-                <td>Zip</td>
-            </tr>
-            </thead>
+      <tbody>
+        <tr v-for="transaction in transactions">
+          <td>{{ transaction.transaction_id }}</td>
+          <td>{{ transaction.medium }}</td>
+          <td>{{ transaction.amount }}</td>
+          <td>{{ transaction.city }}</td>
+          <td>{{ transaction.address }}</td>
+          <td>{{ transaction.state }}</td>
+          <td>{{ transaction.zip }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item"  v-for="(item, index) in links"><a class="page-link" v-on:click="paginate(item)">
+         {{ item.label }}
 
-            <tbody>
-                <tr v-for="transaction in transactions">
-                    <td>{{ transaction.transaction_id }}</td>
-                    <td>{{ transaction.medium }}</td>
-                    <td>{{ transaction.amount }}</td>
-                     <td>{{ transaction.city }}</td>
-                     <td>{{ transaction.address }}</td>
-                     <td>{{ transaction.state }}</td>
-                     <td>{{ transaction.zip }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+        </a></li>
+      </ul>
+    </nav>
+  </div>
 </template>
 
 <script>
+export default {
+  data() {
+    return {
+      transactions: [],
+      originaltransactions: [],
+      transactionSearch: "",
+      user_name: "",
+      location_name: "",
+      links: [],
+    };
+  },
 
-    export default{
-        data(){
-            return{
-                transactions: [],
-                originaltransactions: [],
-                transactionSearch: ''
-            }
+  created: function () {
+    this.fetchUserData();
+  },
+
+  methods: {
+    fetchUserData: function () {
+      this.$http.get("http://localhost:8080/user-transaction?page=1").then(
+        (response) => {
+          this.transactions = response.body.data.data;
+          this.links = response.body.data.links;
+          this.originaltransactions = this.transactions;
         },
+        (response) => {}
+      );
+    },
 
-        created: function()
-        {
-            this.fetchUserData();
-        },
+    searchTransactions: function () {
+      if (this.transactionSearch == "") {
+        this.transactions = this.originaltransactions;
+        return;
+      }
 
-        methods: {
-            fetchUserData: function()
-            {
-                this.$http.get('http://localhost:8080/user-transaction').then((response) => {
-                    this.transactions = response.body.data.data;
-                    this.originaltransactions = this.transactions;
-                }, (response) => {
-
-                });
-            },
-
-            searchTransactions: function()
-            {
-                if(this.transactionSearch == '')
-                {
-                    this.transactions = this.originaltransactions;
-                    return;
-                }
-
-                var searchTrans = [];
-                for(var i = 0; i < this.originaltransactions.length; i++)
-                {
-                    var userName = this.originaltransactions[i]['medium'].toLowerCase();
-                    if(userName.indexOf(this.transactionSearch.toLowerCase()) >= 0)
-                    {
-                        searchTrans.push(this.originaltransactions[i]);
-                    }
-                }
-
-                this.transactions = searchTrans;
-            }
+      var searchTrans = [];
+      for (var i = 0; i < this.originaltransactions.length; i++) {
+        var userName = this.originaltransactions[i]["medium"].toLowerCase();
+        if (userName.indexOf(this.transactionSearch.toLowerCase()) >= 0) {
+          searchTrans.push(this.originaltransactions[i]);
         }
+      }
+
+      this.transactions = searchTrans;
+    },
+
+    filter: function () {
+      console.log(this.user_name, this.location_name);
+      this.$http
+        .get("http://localhost:8080/user-transaction", {
+          params: {
+            user_name: this.user_name,
+            location_name: this.location_name,
+          },
+        })
+        .then(
+          (response) => {
+            this.transactions = response.body.data.data;
+            this.links = response.body.data.links;
+            this.originaltransactions = this.transactions;
+          },
+          (response) => {}
+        );
+    },
+    paginate: function(item){
+        this.$http.get(`http://localhost:8080/user-transaction?page=${Number(item.label)}`).then(
+        (response) => {
+          this.transactions = response.body.data.data;
+          this.links = response.body.data.links;
+          this.originaltransactions = this.transactions;
+        },
+        (response) => {}
+      );
     }
+  },
+};
 </script>
